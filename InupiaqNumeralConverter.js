@@ -53,6 +53,8 @@
                 } else {
                     buildingNumber += text[i]
                 }
+            } else if (text[i] == ',' && text[i + 1] >= '0' && text[i + 1] <= '9') {
+                // This allows numbers formatted as '341,414' to be correctly parsed as '341414' and converted.
             } else {
                 if (buildingNumber) {
                     let spanNode = document.createElement('span')
@@ -124,7 +126,7 @@
     fix(document.body)
 
     let observer = new MutationObserver((mutations) => {
-        // Disconnect the observer so it doesn't observe itself replacing digits with Inupiaq numerals  
+        // Disconnect the observer so it doesn't observe itself replacing digits with Inupiaq numerals
         observer.disconnect()
         mutations.forEach(mutation => fix(mutation.target))
         observer.observe(document.body, { subtree: true, childList: true })
